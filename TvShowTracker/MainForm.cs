@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TvShowTracker.Presenter.Login;
+using TvShowTracker.View;
 
 namespace TvShowTracker
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainView
     {
         public MainForm()
         {
@@ -20,7 +21,15 @@ namespace TvShowTracker
             ILoginPresenter presenter = new LoginPresenter();
             LoginForm loginForm = new LoginForm();
             presenter.AttachView(loginForm);
-            loginForm.ShowDialog();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(String.Format("Hello, {0}", presenter.LoggedInUser.FirstName));
+            }
+            else
+            {
+                MessageBox.Show("Bye-Bye");
+                this.Close();
+            }
         }
     }
 }

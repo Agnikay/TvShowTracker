@@ -79,5 +79,11 @@ namespace TvShowTracker
         {
             CancelClicked?.Invoke(this);
         }
+
+        public void OnSuccessfullLogin()
+        {
+            DialogResult = DialogResult.OK;
+            this.Close();
+        }
     }
 }

@@ -16,23 +16,45 @@ namespace TvShowTracker.Model.DataAccess
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.UserID = "lecture";
             builder.Password = "Qwert123";
-            builder.InitialCatalog = "lecture";
-            builder.DataSource = @"10.70.63.193\SQLEXPRESS";
+            builder.InitialCatalog = "TvShowTracker";
+            builder.DataSource = @"10.70.63.200\SQLEXPRESS";
             builder.IntegratedSecurity = false;
             connectionString = builder.ToString();
         }
 
-        public User FindUserByEmailAndPassword(string name, string password)
+        public User FindUserByLoginAndPassword(string name, string password)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-            }            
-        }
-
-        public User FindUserByNickAndPassword(string name, string password)
-        {
-            
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * from [dbo].[User] where (Nick=@Name OR Email=@Name) AND Password=@Pass";
+                    SqlParameter nameParameter = new SqlParameter("@Name", System.Data.SqlDbType.NVarChar);
+                    SqlParameter passParameter = new SqlParameter("@Pass", System.Data.SqlDbType.NVarChar);
+                    nameParameter.Value = name;
+                    passParameter.Value = password;
+                    command.Parameters.Add(nameParameter);
+                    command.Parameters.Add(passParameter);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            throw new UserNotFoundException();
+                        }
+                        reader.Read();
+                        User user = new User();
+                        user.Id = reader.GetInt32(0);
+                        user.FirstName = reader.GetString(1).Trim();
+                        user.FamilyName = reader.GetString(2).Trim();
+                        user.LastName = reader.GetString(3).Trim();
+                        user.Nick = reader.GetString(4).Trim();
+                        user.Email = reader.GetString(5).Trim();
+                        return user;
+                    }
+                }
+            }
         }
     }
 }

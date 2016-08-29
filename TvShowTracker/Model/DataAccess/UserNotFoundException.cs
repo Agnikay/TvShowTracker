@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace TvShowTracker.Model.DataAccess
 {
-    public interface IUserRepository
+    public class UserNotFoundException : Exception
     {
-        User FindUserByLoginAndPassword(string name, string password);
     }
 }

@@ -16,6 +16,8 @@ namespace TvShowTracker.View.Login
 
         void ShowIncorretUserError();
 
+        void OnSuccessfullLogin();
+
         event LoginViewEventHandler LoginClicked;
 
         event LoginViewEventHandler CancelClicked;
