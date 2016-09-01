@@ -10,7 +10,7 @@ namespace TvShowTracker.Presenter.Main
 {
     public interface IMainPresenter
     {
-        void AttachLogin(ILoginPresenter presenter);
         void AttachView(IMainView mainView);
+        void LoginSuccess(ILoginPresenter presenter);
     }
 }

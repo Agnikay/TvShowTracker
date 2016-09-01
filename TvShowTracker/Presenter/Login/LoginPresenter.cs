@@ -30,20 +30,24 @@ namespace TvShowTracker.Presenter.Login
 
         private void View_CancelClicked(ILoginView sender)
         {
-            sender.ShowIncorretUserError(); 
+            sender.CloseView();
         }
 
         private void View_LoginClicked(ILoginView sender)
         {
-            LoginResult result = new LoginResult();
             try
             {
-                result.User = repository.FindUserByLoginAndPassword(sender.LoginName, sender.Password);
-                OnLoginResult(result);  
+                LoggedInUser = repository.FindUserByLoginAndPassword(sender.LoginName, sender.Password);
+                sender.OnSuccessfullLogin();
             }
             catch (UserNotFoundException ex)
             {
                 sender.ShowIncorretUserError();
+            }
+
+            catch (Exception ex)
+            {
+                sender.ShowConnectionError();
             }
         }
 

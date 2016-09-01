@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TvShowTracker.Model;
 using TvShowTracker.Presenter.Login;
 using TvShowTracker.View;
 
@@ -11,19 +12,17 @@ namespace TvShowTracker.Presenter.Main
     public class MainPresenter : IMainPresenter
     {
         IMainView view;
-        public void AttachLogin(ILoginPresenter presenter)
-        {
-            presenter.OnLoginResult += Presenter_OnLoginResult;
-        }
+        User loggedIn;
 
         public void AttachView(IMainView mainView)
         {
             this.view = mainView;
         }
 
-        private void Presenter_OnLoginResult(LoginResult result)
+        public void LoginSuccess(ILoginPresenter presenter)
         {
-            
+            loggedIn = presenter.LoggedInUser;
+            view.SetUserInfo(loggedIn.FirstName, loggedIn.Nick);            
         }
     }
 }

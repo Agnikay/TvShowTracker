@@ -53,7 +53,10 @@
     <Compile Include="Presenter\IBasePresenter.cs" />
     <Compile Include="Presenter\Login\ILoginPresenter.cs" />
     <Compile Include="Presenter\Login\LoginPresenter.cs" />
+    <Compile Include="Presenter\Main\IMainPresenter.cs" />
+    <Compile Include="Presenter\Main\MainPresenter.cs" />
     <Compile Include="View\IBaseView.cs" />
+    <Compile Include="View\IMainView.cs" />
     <Compile Include="View\Login\ILoginView.cs" />
     <Compile Include="View\Login\LoginForm.cs">
       <SubType>Form</SubType>

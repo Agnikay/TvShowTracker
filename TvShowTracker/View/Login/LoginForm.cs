@@ -85,5 +85,16 @@ namespace TvShowTracker
             DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        public void ShowConnectionError()
+        {
+            MessageBox.Show("Failed to connect to DataBase");
+        }
+
+        public void CloseView()
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }

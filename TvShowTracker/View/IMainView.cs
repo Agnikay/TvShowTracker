@@ -8,5 +8,6 @@ namespace TvShowTracker.View
 {
     public interface IMainView
     {
+        void SetUserInfo(string name, string nick);        
     }
 }

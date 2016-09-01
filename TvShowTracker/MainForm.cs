@@ -8,28 +8,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TvShowTracker.Presenter.Login;
+using TvShowTracker.Presenter.Main;
 using TvShowTracker.View;
 
 namespace TvShowTracker
 {
     public partial class MainForm : Form, IMainView
     {
+        IMainPresenter mainPresenter;
+
         public MainForm()
         {
             InitializeComponent();
 
-            ILoginPresenter presenter = new LoginPresenter();
+            ILoginPresenter loginPresenter = new LoginPresenter();
+            mainPresenter = new MainPresenter();
             LoginForm loginForm = new LoginForm();
-            presenter.AttachView(loginForm);
-            if (loginForm.ShowDialog() == DialogResult.OK)
+            loginPresenter.AttachView(loginForm);
+            mainPresenter.AttachView(this);
+            DialogResult loginResult = loginForm.ShowDialog();
+
+            switch (loginResult)
             {
-                MessageBox.Show(String.Format("Hello, {0}", presenter.LoggedInUser.FirstName));
-            }
-            else
-            {
-                MessageBox.Show("Bye-Bye");
-                this.Close();
-            }
+                case DialogResult.OK:
+                    mainPresenter.LoginSuccess(loginPresenter);
+                    break;
+
+                case DialogResult.Cancel:
+                    MessageBox.Show("Ни хочиш нинада!!!111");
+                    this.Close();
+                    break;
+                default:
+                    MessageBox.Show("WAT?");
+                    this.Close();
+                    break;
+            }            
+        }
+
+        public void SetUserInfo(string name, string nick)
+        {
+            nameLabel.Text = name;
+            nickLabel.Text = nick;
         }
     }
 }

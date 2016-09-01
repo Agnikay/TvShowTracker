@@ -17,7 +17,7 @@ namespace TvShowTracker.Model.DataAccess
             builder.UserID = "lecture";
             builder.Password = "Qwert123";
             builder.InitialCatalog = "TvShowTracker";
-            builder.DataSource = @"10.70.63.200\SQLEXPRESS";
+            builder.DataSource = @"10.70.63.237\SQLEXPRESS";
             builder.IntegratedSecurity = false;
             connectionString = builder.ToString();
         }
